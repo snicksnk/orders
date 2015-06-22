@@ -1,0 +1,56 @@
+
+<div class="row">
+    <div class="block block-friends-page">
+        <div class="block-title block-albums-title"><a href=""><i class="fa fa-users"></i>&nbsp;&nbsp;[[ 'Friends' | translate ]]
+            ([[ friendsService.list.length ]])</a>
+            <a ng-hide="currentUser.isCurrentUserPage()" href="" class="mutual-fr-link">[[ 'Mutual Friends' | translate ]] ([[friendsService.info.matual]])</a>
+
+            <ul class="fr-title-action">
+                <li>
+                    <div class="dropdown creative-field">
+                        <button type="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                            Creative field
+                            <span class="caret"><i class="fa fa-chevron-down"></i></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li><a href="#">Fashion Designer</a></li>
+                            <li><a href="#">Fashion Designer</a></li>
+                            <li><a href="#">Fashion Designer</a></li>
+                            <li><a href="#">Fashion Designer</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="search-wrap">
+                        <form>
+                            <i class="fa fa-search"></i>
+                            <input ng-model="searchPhrase" type="text" id="search-fr" placeholder="Name" class="form-control"/>
+                        </form>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="block-content">
+            <ul class="friends-list-page">
+                <li ng-repeat="friend in friendsService.list" >
+                    <a ng-href="/user/news/myLife/[[ friend.id ]]" class="fr-ava">
+                        <img ng-src="[[ friend.ava ]]" alt=""/>
+                    </a>
+                    <div class="fr-info">
+                        <a ng-href="/user/news/myLife/[[ friend.id ]]" class="fr-name">[[ friend.displayName ]]</a>
+                        <span class="fr-role">Composer</span>
+                        <span class="fr-place"><i class="fa fa-map-marker"></i>&nbsp;[[ friend.country ]], [[ friend.city ]]</span>
+                        <a href="" ng-click="addFriend(friend.id)" ng-hide="friend.isMutual" ng-hide="currentUser.getLogedInUserProfile().id == friend.id" class="top-cont-btn add-friend"><i class="fa fa-plus"></i>&nbsp;&nbsp;[[ 'Add Friend' | translate ]]</a>   
+                      
+                        <a href="" ng-click="unFriend(friend.id)"  ng-show="friend.isMutual" ng-hide="currentUser.getLogedInUserProfile().id == friend.id" class="top-cont-btn add-friend-ok">
+                            <span class="ok-friend"><i class="fa fa-check"></i>&nbsp;&nbsp;[[ 'Friend' | translate ]]</span>
+                            <span class="un-friend"><i class="fa fa-times"></i>&nbsp;&nbsp;[[ 'Unfriend' | translate ]]</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+    <div class="container">
+    <div class="friends">
+        <div class="header">
+            <span class="count">[[ 'Друзья' | translate ]] ([[ friendsService.list.length ]])
+                <em ng-hide="currentUser.isCurrentUserPage()">[[ 'Общие друзья' | translate ]] ([[friendsService.info.matual]])</em></span>
+            <select class="role" name="role">
+                <option value="1">Fashion Designers</option>
+                <option value="2">Fashion Designers</option>
+                <option value="3">Fashion Designers</option>
+                <option value="4">Fashion Designers</option>
+            </select>
+            <input class="search" name="search" type="text" ng-model="searchPhrase"/>
+            <button class="submit" ng-click="searchFriends(searchText)">
+                <img src="/app/modules/friends/images/search-icon.png"/></button>
+            <span class="loading" ng-show="isLoading"><img src="/img/loading1.gif"></span>
+        </div>
+        <ul class="list">
+            <li ng-repeat="friend in friendsService.list" class="friend">
+                <a class="link" ng-href="/user/news/myLife/[[ friend.id ]]">
+                    <img class="avatar" ng-src="[[ friend.ava ]]"/>
+                    <span class="name">[[ friend.displayName ]]</span>
+                </a>
+                <span class="role">Fashion Designer</span>
+                <span class="city">[[ friend.country ]], [[ friend.city ]]</span>
+                <div class="actions" ng-hide="currentUser.getLogedInUserProfile().id == friend.id">
+                        <!--  кнопка Убрать из друзей -->
+                        <span ng-show="friend.isMutual" class="btn-friend-unfriend">
+                            <em>[[ 'Друзья'|translate ]]</em>
+                            <a  href="" ng-click="unFriend(friend.id)" class="poss-t">[[ 'Удалить '|translate ]]</a>
+                        </span>
+                        <!--  кнопка Добавить в друзья -->
+                        <a ng-hide="friend.isMutual"  href="" ng-click="addFriend(friend.id)" class="poss-t btn-add-friend">[[ 'Добавить в друзья'|translate ]]</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

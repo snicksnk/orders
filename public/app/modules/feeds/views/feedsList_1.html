@@ -1,0 +1,110 @@
+<div ng-controller="FeedsCtrl" style="width: 553px;">
+
+        <form  name="FeedForm"  action="" id="send-post-new-form" method="post" ng-show="currentUser.isCurrentUser(currentUser)">
+        <div class="form-post"> 
+
+            <input id="imageId" type="hidden" ng-model="attachedImageId" name="imageId"   ></input>
+            <textarea id="postContent" required ng-model="content" name="content" placeholder="[[ 'О чем Вы думаете?' | translate ]]">[[ 'О чем Вы думаете?' | translate ]]...</textarea>
+            <div class="inf-z"><a class="add-foto" ng-click="attachImage()" href="">[[ 'Добавить фото' |translate ]]</a>
+                <input type="button" ng-click="send()" value="[[ 'Опубликовать' | translate ]]"/>
+            </div>
+        </div>
+    </form>
+
+    <div class="form-post" ng-controller="SendMessageCtrl" ng-hide="currentUser.isCurrentUser(currentUser)">
+        <textarea style="height: 75px;" ng-model="message.message" placeholder="[[ 'Напишите личное сообщение...' | translate ]]"></textarea>
+        <div class="inf-z active">
+            <a class="poss-t" ng-click="send()">[[ 'Отправить' | translate ]]</a></div>
+    </div>
+
+        <form id="upload-image-form" method="post" enctype="multipart/form-data"  action="/images//uploadImage">
+        <input id="dropbox" type="file"  name="image"></input>
+    </form>
+    
+        <div id="feeds-wrappere" ng-repeat="feed in feeds | orderBy:feed.id:reverse">
+
+                <div class="comm [[ 'lang_css_ru' | translate ]]" id="feeds-[[ feed.id ]]">
+            <a href="/user/news/myLife/[[ feed.user.id ]]">
+                <img class="avtr" src="[[ feed.user.ava ]]" alt=""/>
+            </a>
+            <div class="texts">
+                <a class="nm-av" href="/user/news/myLife/[[ feed.user.id ]]">[[ feed.user.displayName ]]</a><br><span>[[ feed.user.country ]], [[ feed.user.city ]]<br>[[ feed.formedDate ]]</span>
+                <p ng-bind-html='feed.content'></p>
+                <br/>
+
+                                <form ng-hide="!feed.image" method="post" action="/images//getImage">
+                    <input type="hidden" name="imageId" ng-value="[[feed.image.id ]]" />
+                    <a ng-href="#/feed-image/[[feed.id ]]">
+                        <img ng-src="[[feed.image.img_mid ]]"  class="show-modal" width="414" alt="">
+                    </a>
+                </form>
+                
+            </div>
+
+                        <a class="cm-all cm-adds"  href="">
+                <span 
+                    ng-click="(commentsInputIsExpanded[feed.id])?collapseCommentsInput(feed.id):expandCommentsInput(feed.id)"
+                >Comment</span>
+                <i class="comments-row" ng-class="(commentsIsExpanded[feed.id])?'comments-row-expanded':'comments-row-collapsed' "
+                    ng-click="(commentsIsExpanded[feed.id])?collapseFeedComments(feed.id):expandFeedComments(feed.id)"
+                >([[ feed.comments.length ]])</i>
+            </a>
+
+                        <div class="add-s">
+                <ul>
+                    <li><a href="">[[ 'Поделиться' | translate ]]</a></li>
+                    <li><a class="share-my-life" ng-click="shareFeed(feed.id)" href="#">[[ 'Моя Жизнь' | translate ]]</a></li>
+                    <li ng-controller="ShareWithFriends"><a ng-click="share(feed.id)" href="">[[ 'Друзья' | translate ]]</a></li>
+                </ul>
+            </div>
+
+                         <div ng-class="currentUser.isCurrentUser((feed.repostData)?feed.repostData.user:feed.user)?'setting':'' "><span></span><a ng-click="deleteFeed((feed.repostData)?feed.repostData.id:feed.id)" class="hid-s" href="">[[ 'Удалить' | translate ]]</a></div>
+        </div>
+
+                <div class="comm of-comm" id="feed-comments-[[ feed.id ]]">
+
+            <div class="hiden-ss"  ye-fade-display="commentsIsExpanded[feed.id]"  ng-repeat="comment in feed.comments" id="feed-hid-comments-[[ feed.id ]]"> 
+                <div class="comm">
+                    <div class="strk">
+                        <img ng-src="[[ comment.user.ava ]]" width="31" alt="">
+                        <a class="nm-av" href="/user/news/myLife/[[ comment.user.id ]]">[[ comment.user.displayName ]]</a>
+                        <span>[[ comment.content ]]<br>[[ comment.formedDate ]]</span>
+                        <div ng-class="currentUser.isCurrentUser( comment.user)?'setting':''"><span></span>
+                            <div ng-click="deleteComment(feed.id, comment.id)"  class="hid-s">
+                                [[ 'Удалить' | translate ]]
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div> 
+
+            <div class="comments-preview" ng-hide="commentsIsExpanded[feed.id]" ng-repeat="comment in feed.comments" >
+                <div class="comm" ng-hide="$index<(feed.comments.length-2)">
+                    <div class="strk">
+                        <img ng-src="[[ comment.user.ava ]]" width="31" alt="">
+                        <a class="nm-av" href="/user/news/myLife/[[ comment.user.id ]]">[[ comment.user.displayName ]]</a>
+                        <span>[[ comment.content ]]<br>[[ comment.formedDate ]]</span>
+                        <div ng-class="currentUser.isCurrentUser( comment.user)?'setting':''"><span></span>
+                            <div ng-click="deleteComment(feed.id, comment.id)" class="hid-s">
+                                [[ 'Удалить' | translate ]]
+                            </div>
+                        </div>
+                    </div>
+                </div>      
+            </div>
+
+
+        </div>
+
+                <div class="comm ev-add" ye-fade-display="commentsInputIsExpanded[feed.id]">
+            <div class="strk">
+                <img ng-src="[[ currentUser.getLogedInUserProfile().ava ]]" width="31" alt=""/>
+                <form class="commentForm" ng-submit="writeComment(feed.id)" method="post" action="/user/news/addComment">
+                    <input type="hidden" name="feedId" value="[[ feed.id ]]">
+                    <textarea ye-enter = "writeComment(feed.id)" ng-model="newCommentText[feed.id]" name="feedText" class="writeComment" placeholder="[[ 'Написать комментарий...' | translate ]]"></textarea>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

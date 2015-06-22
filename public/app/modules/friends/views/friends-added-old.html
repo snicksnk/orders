@@ -1,0 +1,4 @@
+<div class="add-fr-links">
+    <a href="#" ui-sref="friendsApplication()" class="add-link">[[ 'Добавления в друзья'|translate ]] ([[data.count]])</a>
+    <a ng-repeat="user in data.list | limitTo : 4" href="/user/news/myLife/[[user.sender_user.id]]" class="fr-ico fr-ico-1" title="[[user.sender_user.displayName]]"><img src="[[user.sender_user.ava]]" alt="[[user.sender_user.displayName]]"/></a>
+</div>

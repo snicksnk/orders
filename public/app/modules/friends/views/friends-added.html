@@ -1,0 +1,16 @@
+<div class="col-xs-6 first">
+      <ul class="mess-header-links">
+          <li><a ui-sref="messages_list({messageDir:1})" ng-class="(messageDir == 1)?'active':''"><i class="fa fa-inbox"></i>&nbsp;[[ 'Inbox' | translate ]]</a></li>
+          <li><a ui-sref="messages_list({messageDir:2})" ng-class="(messageDir == 2)?'active':''"><i class="fa fa-trash-o"></i>&nbsp;[[ 'Bin' | translate ]]</a></li>
+      </ul>
+</div>
+<div class="col-xs-6">
+    <ul class="fr-requests">
+        <li><a href="/user/news/#/friends-application/"><i class="fa fa-users"></i>&nbsp;&nbsp;[[ 'Friend Requests' | translate ]] ([[data.count]])</a></li>
+        <li>
+            <ul class="fr-req-avatars">
+                <li ng-repeat="user in data.list | limitTo : 3"><a href="/user/news/myLife/[[user.sender_user.id]]" title="[[user.sender_user.displayName]]"  class="message-ava"><img src="[[user.sender_user.ava]]" alt=""></a></li>
+            </ul>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="block block-albums block-albums-page">
+        <div class="block-title block-albums-title">
+            <ul class="albums-btns pull-right" ng-show='isEditable'>
+                <li><a href="" ng-click="attachImage()" class="grey-btn-albums">[[ 'Add Photos' | translate ]]</a></li>
+                <li><a href="" ng-click="attachImage()" class="grey-btn-albums">[[ 'Add Album' | translate ]]</a></li>
+            </ul>
+            <a href=""><i class="fa fa-camera"></i>&nbsp;&nbsp;[[ 'Albums' | translate ]]
+            ([[list.length]])</a>
+        </div>
+        <div class="block-content">
+            <ul class="albums-list albums-list-page">
+                <li ng-repeat="album in list">
+                    <a href="">
+                        <img  ui-sref="photoInAlbum({albumId: album.id})" ng-src="[[ album.cover.image.img_ava ]]" alt="">
+                        <span class="album-title"><input type="text" ye-enter="edit(album.id, album.title)" ng-model="album.title"  /></span>
+                        <span  ui-sref="photoInAlbum({albumId: album.id})" class="album-count">[[ album.numOfPhotos ]] [[ 'photos' | translate ]]</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

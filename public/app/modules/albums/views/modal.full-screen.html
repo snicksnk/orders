@@ -1,0 +1,19 @@
+<div class="modal fade in show img-full-size" id="img-full-size" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" ng-init="onOpen()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button ng-click="close()" type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true"><i class="fa fa-times"></i></span><span class="sr-only">Close</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <a ng-show="prevState" href="" ng-click="prevImage(image.id)" href="" class="modal-img-btn modal-img-btn-left"><i class="fa fa-angle-left"></i></a>
+                <a ng-show="nextState" href="" ng-click="nextImage(image.id)"  href="" class="modal-img-btn modal-img-btn-right"><i class="fa fa-angle-right"></i></a>
+                <img ng-src="[[ image.img ]]" alt="" class="full-size-photo">
+            </div>
+
+        </div>
+    </div>
+</div>

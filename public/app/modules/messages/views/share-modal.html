@@ -1,0 +1,95 @@
+<div ng-show="showModal && !showSuccess"  class="modal fade in show share-content in"  id="share-content" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: block; padding-left: 15px;">
+    <div class="modal-backdrop fade in" style="height: 600px;" ng-click="hide()" data-dismiss="modal"></div>
+    <div  class="modal-dialog">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button"  ng-click="hide()" class="close" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times"></i></span><span class="sr-only">[[ 'Close' | translate ]]</span></button>
+                <h4 class="modal-title"><i class="fa fa-share"></i>&nbsp;&nbsp;[[ 'Share' | translate ]]</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="share-select-wrap">
+                    <label>[[ 'Friend' | translate ]]</label>
+                    <div class="dropdown creative-field">
+                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="[[ selectedFriend.ava ]]" ng-show="selectedFriend.ava"><span ng-hide='selectedFriend.displayName'>[[ 'Select a friend' | translate ]]</span>[[ selectedFriend.displayName ]]
+                            <span class="caret"><i class="fa fa-chevron-down"></i></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li ng-repeat="element in peoples"><a href=""  ng-click="selectFriend(element);"><img src="[[ element.ava ]]">[[ element.displayName ]]</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="message-content" style="padding: 20px 0;">
+
+                    <p class="message-txt"  ng-bind-html='feed.content'>
+                       
+                    </p>
+
+                    <p class="message-img" ng-hide="!feed.image" style="text-align: center; margin-bottom: 20px;">
+                        <a href="" ng-href="#/feed-image/[[feed.id ]]"><img style="height: 150px;"ng-src="[[feed.image.img_mid ]]" alt=""></a>
+                    </p>
+                    
+                    <div class="post-images" ng-show="feed.linkShare.domain">
+                       <ul>
+                           <li>
+                               <a href="[[ feed.linkShare.url ]]">
+                                   <img style="max-width: 100px; max-height: 50px;" src="[[ feed.linkShare.imageURL ]]" alt="">
+                               </a>
+                           </li>
+                       </ul>
+                       <div     class="post-image-txt">
+                           <h3 class="post-image-txt-h3">[[ feed.linkShare.title ]]</h3>
+
+                           <p>[[ feed.linkShare.summary ]]</p>
+                           <br>
+
+                           <p><a href="[[ feed.linkShare.url ]]">[[ feed.linkShare.domain ]]</a></p>
+                       </div>
+                   </div>
+                    
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" ng-click="hide()" class="btn cancel-btn" data-dismiss="modal">[[ 'Cancel' | translate ]]</button>
+                <button type="submit" ng-click='send()' class="btn save-btn">[[ 'Send' | translate ]]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="showSuccess" class="modal fade share-success in show" id="add-to-mylife" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: block;">
+    <div class="modal-backdrop fade in" style="height: 600px;" ng-click="hide()" data-dismiss="modal"></div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i ng-click="hide()" class="fa fa-times"></i></span><span  class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="success-icon"><i class="fa fa-check"></i></div>
+                <p>[[ 'This work has been sended to your friend' | translate ]]</p>
+
+                </div>
+        </div>
+    </div>
+</div>
+
+
+<div ng-show="showSuccessLife" class="modal fade share-success in show" id="add-to-mylife" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: block;">
+    <div class="modal-backdrop fade in" style="height: 600px;" ng-click="hide()" data-dismiss="modal"></div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i ng-click="hide()" class="fa fa-times"></i></span><span  class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="success-icon"><i class="fa fa-check"></i></div>
+                <p>[[ 'This work has been added to My Life successfully' | translate ]]</p>
+
+                </div>
+        </div>
+    </div>
+</div>

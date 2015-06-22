@@ -1,0 +1,10 @@
+<div class="title-side o1" ng-class="(friendsService.shortList.length == 0)?'my-life-mini-block':''">
+    <a ui-sref='albums' class="ico"></a>
+    <a ui-sref='albums'>[[ 'Альбомы'|translate ]] ([[ list.length ]])</a>
+</div>
+<div class="ov-side-img">
+    <a ui-sref="photoInAlbum({albumId: album.id})" ng-repeat="album in list | limitTo: 6">
+    	<img style="width: 108px;" ng-src="[[ album.cover.image.img_ava ]]" alt=""/>
+    </a>
+  
+</div>

@@ -1,0 +1,59 @@
+
+<div class="strk">
+    <img src="<%-comment.user.ava%>" width="31" alt=""/>
+
+    <a class="nm-av" href="{{ url('myNews', {'action':'myLife'}) }}/<%-comment.user.id%>"><%-comment.user.displayName%></a>
+    <span><%-comment.content%><br><%-comment.formedDate%></span>
+
+    <div class="setting"><span></span>
+        <div id="remove-comment-<%-comment.id%>" class="hid-s">
+                                                {{  translate('Удалить') }}
+                                            </div>
+    </div>
+</div>
+
+    <script id="feed-template" type="text/template">
+        <div class="comm {{ translate('lang_css_ru') }}" id="feeds-<%-feed.id%>">
+            <img class="avtr" src="<%-feed.user.ava%>" alt=""/>
+            <div class="texts">
+                <a class="nm-av" href="{{ url('myNews', {'action':'myLife'}) }}/<%-feed.user.id%>"><%-feed.user.displayName%></a><br><span><%-feed.user.country%>, <%-feed.user.city%><br><%-feed.formedDate%></span>
+                <p><%=feed.content%></p>
+                <br/>
+                <% if (feed.image) { %>
+                <form method="post" action="{{ url('images', {'action':'getImage'}) }}">
+                    <input type="hidden" name="imageId" value="<%=feed.image.id%>" />
+                    <a href="#/image/dd<%=feed.image.id%>">
+                        <img src="<%=feed.image.img_mid%>"  class="show-modal" width="414" alt="">
+                    </a>
+                </form>
+                <% } %>
+            </div>
+            <a class="cm-all cm-adds" href=""><span>Comment</span><i>(<%-feed.commentsCount%>)</i></a>
+            <div class="add-s">
+                <ul>
+                    <li><a href="">{{  translate('Поделиться')  }}</a></li>
+                    <li><a class="share-my-life" href="/user/news/share?id=<%-feed.id%>">{{  translate('Моя Жизнь') }}</a></li>
+                    <li><a href="">{{  translate('Друзья') }}</a></li>
+                </ul>
+            </div>
+            <div class="setting"><span></span><a id="remove-feed-<%-feed.id%>" class="hid-s" href="">{{  translate('Удалить') }}</a></div>
+        </div>
+        <div class="comm of-comm" id="feed-comments-<%-feed.id%>">
+
+            <div class="hiden-ss" id="feed-hid-comments-<%-feed.id%>">
+
+
+            </div>
+
+        </div>
+        <div class="comm ev-add">
+            <div class="strk">
+                <img src="/img/ava3.png" width="31" alt=""/>
+                <form class="commentForm" method="post" action="{{ url('myNews', {'action':'addComment'}) }}">
+                    <input type="hidden" name="feedId" value="<%-feed.id%>">
+                    <textarea name="feedText" class="writeComment">{{  translate('Написать коментарий...') }}</textarea>
+                </form>
+            </div>
+        </div>
+    </script>
+

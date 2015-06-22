@@ -1,0 +1,71 @@
+<div class="title title-friends">Сообщения</div>
+
+<div class="mess-menu-wrap">
+    <div class="mess-menu">
+        <ul class="mess-links" ng-include="'/app/modules/messages/views/messages-links.html'">
+        
+        </ul>
+		<div ng-controller="FriendsAdded" ng-include="'/app/modules/friends/views/friends-added.html'"></div>
+        </ul>
+    </div>
+</div>
+<div class="friends-list messages-list">
+    <ul>
+        
+        <li class="mess" ng-repeat="message in list" ng-hide="message.status.removeMessageItSelf">
+             
+            <div ng-init="haveNewMessage()"></div>
+            <div class="ava"><a href="/user/news/myLife/[[ message.user.id ]]"><img class="" src="[[ message.user.ava ]]" alt=""/></a></div>
+            <div class="info texts">
+                <a class="nm-av" href="/user/news/myLife/[[ message.user.id ]]">[[ message.user.displayName ]]</a>
+                <br>
+                <span>[[ message.user.country ]], [[ message.user.city ]]<br>[[ message.created_dt ]]</span>
+            </div>
+            <div class="mess-wrap">
+                <span class="txt">
+                    [[ message.message ]]
+                   
+                    <div class="modal-share_inside" ng-show="message.feed_repost_of" ng-init='(message.feed_repost_of)?(feed = message.feed_repost_of):(feed = false)'>
+       
+                        <div class="comm [[ 'lang_css_ru' | translate ]]" id="feeds-[[ feed.id ]]">
+                            <a href="/user/news/myLife/[[ feed.user.id ]]">
+                                <img src="[[ feed.user.ava ]]" alt=""/>
+                            </a>
+                            <div class="texts">
+                                <a class="nm-av" href="/user/news/myLife/[[ feed.user.id ]]">[[ feed.user.displayName ]]</a>
+								<span>[[ feed.user.country ]], [[ feed.user.city ]]<br>[[ feed.formedDate ]]</span>
+                                <p ng-bind-html='feed.content'></p>
+								<br />
+                                <form ng-hide="!feed.image" method="post" action="{{ url('images', {'action':'getImage'}) }}">
+                                    <input type="hidden" id="message-text-input" name="imageId" ng-value="[[feed.image.id ]]" />
+                                    <a ng-href="#/feed-image/[[feed.id ]]">
+                                        <img ng-src="[[feed.image.img_mid ]]"  class="show-modal" width="414" alt="">
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+            <div class="btns-set">
+                <a class="poss-t f-left">Ответить</a>
+                <a class="poss-t f-right">Поделиться</a>
+            </div>
+            <div ng-class="currentUser.isCurrentUser((feed.repostData)?feed.repostData.user:feed.user)?'setting':'' "
+                 class="setting">
+                <span></span>
+                <a ng-click="deleteMessage(message.id)" class="hid-s" href="">[[ 'Удалить' | translate ]]</a>
+            </div>
+        </li>
+
+        <li class="mess mess-active mess-del">
+            <div  class="mess-resp-wrap">
+                <textarea style="width: 100%"  ng-model="message.message"></textarea>
+                <input type="submit" ng-click="send()" value="Отправить" />
+            </div>
+        </li>
+
+
+    </ul>
+
+</div>

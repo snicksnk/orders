@@ -1,0 +1,81 @@
+<div class="modal-image" ng-init="onOpen()" ng-hide="!isDisplay"> 
+    <div  class="bg-modal"  ng-click="close()"></div>
+    <div id="imgId"></div>
+    <div class="cont-modal-prev" >
+        <div class="close2" ng-click="close()"></div>
+        <div class="right-text-modal">
+
+            <div class="comm ">
+                <img class="avtr" ng-src="[[ image.user.ava ]]" alt=""/>
+                <div class="texts">
+                    <a class="nm-av" href="/user/news/myLife/[[ image.user.id ]]">[[ image.user.displayName ]]</a><br><span>[[ image.user.city ]]<br>[[ image.formedDate ]]</span>
+                </div>
+                <div class="texts one">
+                    <p>
+                        <b>[[ image.title ]]</b>
+                        [[ image.description ]]
+                    </p>
+                </div>
+                <div class="prevstwo">Review (<a href="">99</a>)</div>
+                <a href="" class="prevs"><span>Like</span> (99)</a>
+                <a class="cm-all" href=""><span>Comment</span><i>([[ image.comments.length ]])</i></a>
+                <div class="add-s">
+                    <ul>
+                        <li><a href="">[[ 'Поделиться' | translate ]]</a></li>
+                        <li><a href="" ng-click="share(feed.id)">[[ 'Моя Жизнь' | translate ]]</a></li>
+                        <li ng-controller="ShareWithFriends"><a href="" ng-click="share(feed.id)">[[ 'Друзья' | translate ]]</a></li>
+                    </ul>
+                </div>
+                <div class="[[ isEditable? 'setting':'' ]]"><span></span><a class="hid-s" ng-click="edit()" href="">[[ 'Редактировать' | translate ]]</a></div>
+            </div>
+
+            <div  class="content">
+
+                <div id="content_1" class="comm-image-content" style="height: 265px; " >
+                    <div class="comm" ng-repeat="comment in image.comments">
+                        <div class="strk">
+                            <img ng-src="[[ comment.user.ava ]]" width="31" alt=""/>
+                            <a class="nm-av" href="/user/news/myLife/[[ comment.user.id ]]">[[comment.user.displayName ]]</a>
+                            <span>[[ comment.content ]]<br>[[ comment.formedDate ]]</span>
+
+                            <div class="setting" ng-show="currentUser.isCurrentUser(comment.user) || isEditable"><span></span>
+                            <div ng-click="deleteComment(comment.id)" class="hid-s">
+                                [[ 'Удалить' | translate ]]
+                            </div>
+                        </div>
+                    </div>
+                    
+                    </div>   
+                </div>
+
+                <div class="strk" style="top: -20px;position: relative; ">
+                    <img ng-src="[[ currentUser.getLogedInUserProfile().ava ]]" width="31" alt=""/>
+                    <form class="commentImageForm" method="post" action="{{ url('myNews', {'action':'addComment'}) }}">
+                        <input type="hidden" name="feedId" id="comment-image-id" value="">
+                        <textarea  ye-enter = "writeComment(feed.id)" ng-model="newCommentText[feed.id]" name="feedText" class="writeComment">[[ 'Написать коментарий...' | translate ]]</textarea>
+                    </form>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="sldr-modl" >
+            <div id="showcase" class="showcase"> 
+                <a href="" ng-click="prevImage(image.id)" class="arrow arr-prev"></a>
+                <a href="" ng-click="nextImage(image.id)" class="arrow arr-next"></a>
+                <div class="showcase-slide">
+                    <div class="showcase-content">
+                        <div class="poss-y">
+                            <img id="the-image" ng-src="[[ image.img_mid ]]"   alt=""/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-controller="ViewerCtrl">
+                <a class="pr-big" rel="ex1" ng-click="openSplash(image.img)" id="imgBig" href=""><img src="/img/bigs.png" alt=""/></a>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

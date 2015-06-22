@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="block block-albums block-albums-open">
+        <div class="block-title block-albums-title">
+            <ul class="albums-btns pull-right">
+                <li><a href="" ng-click="attachImage()" class="grey-btn-albums">[[ 'Add Photos' | translate ]]</a></li>
+                <li><a href="" ng-click="attachImage()" class="grey-btn-albums">[[ 'Add Album' | translate ]]</a></li>
+            </ul>
+            <a href="" ui-sref="albums()"> <i class="fa fa-camera"></i>&nbsp;&nbsp;[[ 'Albums' | translate ]]
+                ([[ albumService.list.length || 0]])</a>
+        </div>
+        <div class="open-album-title">
+            <a href="" class="comments-edit" ye-toggle-active>
+                <i class="fa fa-cog"></i>
+                    <span class="message-del" data-toggle="modal" ng-click="removeAlbum(album.id)" data-target="#del-album">
+                        <i  class="fa fa-trash-o"></i>&nbsp;[[ 'Delete album' | translate ]]
+                    </span>
+            </a>
+            <h2>[[ album.title ]]</h2>
+            <span>[[ list.length || 0 ]] [[ 'photos' | translate ]]</span>
+        </div>
+        <div class="block-content">
+            <ul class="albums-list albums-list-open">
+                <li ng-repeat="feed in list | orderBy : 'id' : 'true'">
+                    <a href="" ui-sref="albumPhotoModal({albumId:album.id ,id: feed.id})">
+                        <img ng-src="[[ feed.image.img_ava ]]" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="block block-albums block-albums-page">
+        <div class="block-title block-albums-title">
+            [[ 'Other Albums' | translate ]]
+        </div>
+        <div class="block-content">
+            <ul class="albums-list albums-list-page">
+                <li ng-repeat="otherAlbum in albumsList" ng-hide="otherAlbum.id == album.id">
+                    <a href="" ui-sref="photoInAlbum({albumId: otherAlbum.id})">
+                        <img ng-src="[[ otherAlbum.cover.image.img_ava ]]" alt="[[ otherAlbum.title ]]">
+                                 <span class="album-title">
+                                    <input type="text" ye-enter="edit(otherAlbum.id, otherAlbum.title)"
+                                           ng-model="otherAlbum.title"/>
+                                 </span>
+                        <span class="album-count">[[ otherAlbum.numOfPhotos ]] [[ 'photos' | translate ]]</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
