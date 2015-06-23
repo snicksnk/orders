@@ -13,6 +13,11 @@ return array(
 			'action-controllers' => [
 				'index'
 			]
+		],
+		'orders' => [
+			'action-controllers' => [
+				'index'
+			]
 		]
 	),
 );

@@ -17,7 +17,6 @@ namespace {
 
 			$controllerModuleName = $module.'-'.$controller.'-controller';
 
-
 			if(array_key_exists($controllerModuleName, $di)){
 
 			} else {
@@ -26,8 +25,15 @@ namespace {
 
 			$currentController = module\get($di, $controllerModuleName);
 		
-
-			return $currentController($action);
+			if (is_array($currentController)){
+				if (array_key_exists($action, $currentController)){
+					return $currentController[$action]();
+				} else {
+					throw new \Exception("Action {$action} is not founded in {$controllerModuleName} controller");
+				}
+			} else {
+				return $currentController($action);
+			}
 		};
 	});
 }
