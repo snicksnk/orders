@@ -1,7 +1,7 @@
 <?php 
 
 return array(
-	'modules-dir' => 'modules',
+	'modules-dir' => APP_ROOT.'modules',
 	'modules' => array(
 		'goods',
 		'welcome' => [

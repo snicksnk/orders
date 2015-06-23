@@ -1,17 +1,9 @@
 <?php 
-return module\define(['config', 'router'], function($config, $router){
+return module\define(['config', 'router', 'init-params'], function($config, $router, $initParams){
 
 
 	$appConfig = $config();	
-
-	$di = [];
-
-
-
-	\module\addInitedModule($di, 'config', $config);
-	\module\addInitedModule($di, 'router', $router);
-
-	
+	$di = $initParams['di'];
 
 	foreach ($appConfig['modules'] as $moduleNameOrIndex => $moduleNameOrConfig){
 		if (is_array($moduleNameOrConfig)){
@@ -35,7 +27,7 @@ return module\define(['config', 'router'], function($config, $router){
 
 	\module\bootstrapAll($di);
 
-	$router = \module\get($di,'router');
+	//$router = \module\get($di,'router');
 
 	$result = $router($di);
 
