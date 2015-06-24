@@ -18,6 +18,7 @@ return array(
 			'action-controllers' => [
 				'index'
 			]
-		]
+		],
+		'orm'
 	),
 );
