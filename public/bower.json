@@ -1,0 +1,23 @@
+{
+  "name": "sskicrm",
+  "version": "0.0.0",
+  "authors": [
+    "snicksnk <snicksnk@gmail.com>"
+  ],
+  "license": "EULA",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.15",
+    "angular": "~1.4.1",
+    "bootstrap": "~3.3.5",
+    "angular-mocks": "~1.4.1",
+    "angular-bootstrap": "~0.13.0"
+  }
+}
