@@ -6,7 +6,7 @@ angular.module('Orders')
     orders: {
         'list': function () {
             return {
-                url: '/api.php?module=orders&controller=index',
+                url: 'api.php?module=orders&controller=index',
                 method: 'get'
             }
         },
@@ -29,7 +29,7 @@ angular.module('Orders')
     goods: {
         'getByImageUrl': function (imageUrl) {
             return {
-                url: '/api.php?module=orders&controller=index&action=getGood&imgUrl='+imageUrl,
+                url: 'api.php?module=orders&controller=index&action=getGood&imgUrl='+imageUrl,
                 method: 'get'
             }
         }
