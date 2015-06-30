@@ -1,13 +1,25 @@
 angular.module('Orders')
 
-.factory('GoodsInOrder', function($rootScope){
-	var Goods = function(){
+.factory('GoodsInOrder', function($rootScope, $http ,Routes){
+	var Goods = function(routes){
 		this.list = {};
+		this.routes = routes;
+		this.totalPrice = 0;
 	}
 
 	Goods.prototype.add = function(good){
-		this.list[good.id]=good;
-		$rootScope.$broadcast('orders.goods.update');
+		var that = this;
+		if (typeof good.count == 'undefined'){
+			good.count = 1;
+		} 
+		$http(this.routes.getByImageUrl(good.imageUrl)).success(function(data){
+			good.price = data.price;
+			that.list[good.id]=good;
+			delete good.id;
+			$rootScope.$broadcast('orders.goods.update');
+			console.log(this.totalPrice);
+		});
+
 	}
 
 	Goods.prototype.getCurrent = function(){
@@ -22,11 +34,12 @@ angular.module('Orders')
 	}
 
 	Goods.prototype.remove = function(id){
+		this.totalPrice += this.list[id].price;
 		delete this.list[id];
 		$rootScope.$broadcast('orders.goods.update');
 	}
 	
-	return new Goods;
+	return new Goods(Routes.goods);
 
 })
 .factory('OrdersService', function($rootScope, $http, Routes){
@@ -77,6 +90,18 @@ angular.module('Orders')
 
 	OrdersService.getList();
 
+	var orderRowName, orderAsc = true;
+	$scope.orderCond = "id";
+
+	$scope.orderBy = function(rowName){
+		
+		if (orderRowName == rowName){
+			orderAsc = (orderAsc)?false:true;
+		}
+		orderRowName = rowName;
+		$scope.orderCond = ((orderAsc)?'':'-')+orderRowName;
+		console.log($scope.orderCond);
+	}
 
 	$scope.addGood = function(){
 		var image = $scope.orderImage;
@@ -85,7 +110,7 @@ angular.module('Orders')
 			'imageUrl':image,
 			'id':image
 		}
-		GoodsInOrder.add(order);
+		GoodsInOrder.add(order); 
 	};
 
 	$scope.removeGood = function(orderId){
@@ -93,15 +118,29 @@ angular.module('Orders')
 		GoodsInOrder.remove(orderId);
 	};
 
+	function calculatePrice(goods){
+		var totalPrice = 0;
+		angular.forEach(goods, function(good){
+			console.log('calulate',parseInt(good.price) , good.count);
+
+			totalPrice += parseInt(good.price) * good.count;
+		})
+		console.log('tota; price',totalPrice);
+		return totalPrice;
+	}
+
 	$scope.saveOrder = function(order){
+
+		var orderGoods = GoodsInOrder.getCurrent();
 		console.log($scope.orders);
 		var orderData = {
 			'fio': $scope.order['fio'],
 			'adress': $scope.order['adress'],
 			'index': $scope.order['index'],
 			'comment': $scope.order['comment'],
-			'price': $scope.order['price'],
-			'goods': GoodsInOrder.getCurrent()
+			//'price': $scope.order['price'],
+			'goods': orderGoods,
+			'totalPrice': calculatePrice(orderGoods)
 		}
 
 		$scope.order = {};

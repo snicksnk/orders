@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Orders">
+<head>
+	<meta charset="UTF-8">
+	<title>Siski alive</title>
+
+
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+	<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+	<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+	<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+
+	
+
+	<script type="text/javascript" src="app/app.js"></script>
+	<script type="text/javascript" src="app/config/config.js"></script>
+
+	<script type="text/javascript" src="app/config/routes.js"></script>
+	<script type="text/javascript" src="app/config/states.js"></script>
+	<script type="text/javascript" src="app/services/abstractService.js"></script>
+	
+
+	<script type="text/javascript" src="app/modules/orders/scripts/orderEdit.js"></script>
+
+	<script src="bower_components/angular-mocks/angular-mocks.js"></script>
+	
+</head>
+<body>
+	<div class="row" ng-controller="orderEdit">
+		<div class="col-md-3 well ">
+			<div class="form-group" >
+
+				<label for="exampleInputEmail1">Товары</label>
+				<div class="row"> 
+					<div class="col-md-8">
+						<input ng-model="orderImage" type="text" class="form-control col-md-8" id="newOrder" placeholder="ulr картинки">
+					</div>
+					<button ng-click="addGood()" type="button" class="btn col-md-4">Добавить</button>					
+				</div>
+
+			</div>
+			<form ng-submit="saveOrder()">
+				<div class="form-group">
+					<label for="inputFIO">ФИО</label>
+					<input type="text" ng-model="order.fio" class="form-control" id="inputFIO" placeholder="ФИО">
+				</div>
+
+				<div class="form-group">
+					<label for="inputAdress">Адрес</label>
+					<input type="text" ng-model="order.adress" class="form-control" id="inputAdress" placeholder="Адрес">
+				</div>
+				<div class="form-group">
+					<label for="inputIndex">Индекс</label>
+					<input type="text" ng-model="order.index" class="form-control" id="inputIndex" placeholder="Индекс">
+				</div>
+				<div class="form-group">
+					<label for="inputPrice">Цена</label>
+					<input type="text" ng-model="order.price" class="form-control" id="inputPrice" placeholder="Цена">
+				</div>
+				<div class="form-group">
+					<label for="inputComment">Коментарий</label>
+					<textarea class="form-control" ng-model="order.comment" id="inputComment" placeholder="Текст">
+					</textarea>
+				</div>
+				<div class="form-group">
+					<button ng-click="saveOrder(order)" type="button" class="btn">Сохранить</button>
+				</div>
+			</form>
+
+		</div>
+
+		<div class="col-md-9">
+			<div class="row" ng-controller="orderEdit" >
+				<div style="width: 150px; display: inline-block;" ng-repeat="order in goodsInOrder" >
+						<span>
+							<img style="max-width: 150px; max-height: 200px;" ng-click="removeGood(order.id)" src="{{ order.imageUrl }}" class="img-rounded">
+							<div style="text-align: center; width: 150px; margin-top: 10px; margin-bottom: 10px;">
+								<input style="width: 60px; margin: auto; text-align: center;"  type="text" class="form-control" ng-model="order.count" id="exampleInputPassword1" placeholder="1Шт.">Шт.
+							</div>
+							<div style="text-align: center; width: 150px; margin-top: 10px; margin-bottom: 10px;">
+								<input style="width: 60px; margin: auto; text-align: center;" type="text" class="form-control" ng-model="order.price" id="exampleInputPassword1" placeholder="Цена.">руб.
+							</div>
+						</span>
+				</div>
+			</div>
+			<table class="table">
+				<thead>
+		            <tr>
+						<th ng-click="orderBy('id')">#</th>
+						<th ng-click="orderBy('fio')">ФИО</th>
+						<th ng-click="orderBy('adress')">Адрес</th>
+						<th ng-click="orderBy('index')">Индекс</th>
+						<th ng-click="orderBy('goods')">Товары</th>
+						<th ng-click="orderBy('total_price')">Цена</th>
+						<th ng-click="orderBy('comment')">Коментарий</th>
+		            </tr>
+		        </thead>
+				<tbody>
+	                <tr ng-repeat="order in orders | orderBy:orderCond">
+	                  <td>{{ order.id }}</td>
+	                  <td>{{ order.fio }}</td>
+	                  <td>{{ order.adress }}</td>
+	                  <td>{{ order.index }}</td>
+	                  <td style="200px;">
+						<span style="margin-top: 3px; width: 100px;  display: inline-block;" ng-repeat="good in order.goods">
+						 	<span style="width: 100px;">
+								{{ (good.count)?good.count:1 }}x
+
+							</span> 	
+							<a href="{{ good.imageUrl }}" target="blank"><img style=" max-height: 100px; max-width: 150px;" src="{{ good.imageUrl }}"/></a>
+							
+						</span>
+
+	                  </td>
+	                  <td>{{ order.total_price }}</td>
+	                  <td>{{ order.comment }}</td>
+	                </tr>
+              </tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
