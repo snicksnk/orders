@@ -11,6 +11,7 @@ namespace module{
 			'definition' => null,
 			'module' => null,
 			'isInited' => false,
+			'extraFiles' => [],
 			'_initParams' => $initParams
 		];
 	}
@@ -22,6 +23,7 @@ namespace module{
 			'definition' => null,
 			'module' => $module,
 			'isInited' => true,
+			'extraFiles' => [],
 			'_initParams' => $initParams
 		];
 	}
@@ -33,6 +35,7 @@ namespace module{
 			'definition' => $definition,
 			'module' => null,
 			'isInited' => true,
+			'extraFiles' => [],
 			'_initParams' => []
 		];
 	}
@@ -43,9 +46,9 @@ namespace module{
 
 
 
-	function define($moduleDependencies, $moduleDefinition){
+	function define($moduleDependencies, $moduleDefinition, $extraFiles = []){
 
-		$definer =  function ($di, $initParams) use ($moduleDependencies, $moduleDefinition) {
+		$definer =  function ($di, $initParams, $pathToModule) use ($moduleDependencies, $moduleDefinition, $extraFiles) {
 			$dependencies = [];
 
 
@@ -68,6 +71,13 @@ namespace module{
 			if ($initParams){
 				addInitedModule($di, 'init-params', $initParams);
 				$dependencies[] = $di['init-params']['module'];
+			}
+
+			foreach ($extraFiles as $file) {
+				$filePath = dirname($pathToModule).DIRECTORY_SEPARATOR.$file;
+				if(!include_once($filePath)){
+					throw new \Exception("Can't include extra file {$filePath}");
+				}
 			}
 	
 			$module = call_user_func_array($moduleDefinition, $dependencies);
@@ -109,10 +119,10 @@ namespace module{
 
 			$initParams = ($initParams)?$initParams:$moduleData['_initParams'];
 
-			$moduleData['module'] = $moduleData['definition']($di, $initParams);
 
-
+			$moduleData['module'] = $moduleData['definition']($di, $initParams, $moduleData['path']);
 			$moduleData['isInited'] = true;
+
 		}
 	}
 

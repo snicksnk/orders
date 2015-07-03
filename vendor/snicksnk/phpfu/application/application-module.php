@@ -6,12 +6,17 @@ return module\define(['config', 'router', 'init-params'], function($config, $rou
 	$di = $initParams['di'];
 
 	foreach ($appConfig['modules'] as $moduleNameOrIndex => $moduleNameOrConfig){
+
 		if (is_array($moduleNameOrConfig)){
 			$moduleName = $moduleNameOrIndex;
 			$moduleConfig = $moduleNameOrConfig;
 		} else {
 			$moduleName = $moduleNameOrConfig;
 			$moduleConfig = [];
+		}
+
+		if (\module\get($di, $moduleName)){
+			continue;
 		}
 
 		\module\load($di, $moduleName, \module\getModuleFilePath($appConfig['modules-dir'], $moduleName));
