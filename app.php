@@ -9,6 +9,7 @@ namespace {
 	//die($modulesDir);
 	\module\load($di, 'config', \module\getModuleFilePath($modulesDir, 'config'));
 	\module\load($di, 'router', \module\getModuleFilePath($modulesDir, 'router'));
+	\module\load($di, 'db', \module\getModuleFilePath($modulesDir, 'db'));
 	//TODO Fix it mb?
 	\module\bootstrapAll($di);
 	\module\load($di, 'application', \module\getModuleFilePath($modulesDir, 'application'), ['di' => $di]);

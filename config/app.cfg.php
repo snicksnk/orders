@@ -19,6 +19,12 @@ return array(
 				'index'
 			]
 		],
-		'orm'
+		'orm',
+		'db' => [
+			'host' => 'localhost',
+			'user' => 'root',
+			'password' => 'pwd',
+			'dbname' => 'orders'
+		]
 	),
 );
