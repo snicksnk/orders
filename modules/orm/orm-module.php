@@ -1,9 +1,8 @@
 <?php 
 return module\define([], function(){
 	require APP_ROOT.'vendor/ReadBean/rb.php';
-	R::setup('sqlite:/tmp/dbfile.db');
-	//R::setup('mysql:host=localhost;
-    //    dbname=orders','root','pwd');
+	//R::setup('sqlite:/tmp/dbfile.db');
+	R::setup('mysql:host=localhost;dbname=orders','root','pwd');
 
 /*	$book = R::dispense( 'book' );
 	$book->title = 'Learn to Program';

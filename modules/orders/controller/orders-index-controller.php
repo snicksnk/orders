@@ -1,7 +1,7 @@
 <?php 
 namespace orders\controller;
 use R;
-return \module\define(['orders'], function($orders){
+return \module\define(['orders', 'db'], function($orders, $db){
 
 	function processEntity($input, $forceName = null) {
 		$entityName = ($forceName)?$forceName:$input['_entity_name'];
@@ -44,7 +44,26 @@ return \module\define(['orders'], function($orders){
 	}
 
 	return [
-		'index' => function(){
+		'index' => function() use ($db){
+			$result = \orders\model\getList($db, []);
+
+			foreach ($result as $key => $order) {
+				foreach ($order as $rowName => $orderRowVal) {
+					if ($data = json_decode($orderRowVal, true)){
+						if(is_array($data)){
+							$result[$key][$rowName] = $data;
+						}
+					}
+				}
+			}
+			return json_encode($result);
+		},
+		'delete' => function() use ($db){
+			$id = (int)$_POST['id'];
+			$result = \orders\model\delete($db, $id);
+			return json_encode(['result' => $result]);
+		},
+		'index2' => function(){
 			/*return '[{"fio":"Петров Иван Васильевич", "adress":"Черкасск 23-12","index":"456332","comment":"Упакуйте в коробочку","goods":{"https://cs7052.vk.me/c540103/v540103350/2148e/TQEi6w5etFQ.jpg":{"imageUrl":"https://cs7052.vk.me/c540103/v540103350/2148e/TQEi6w5etFQ.jpg","id":"https://cs7052.vk.me/c540103/v540103350/2148e/TQEi6w5etFQ.jpg","count":"3"},"https://cs7052.vk.me/c540103/v54010396	8/1ca47/7Vouh3_Y5Gc.jpg":{"imageUrl":"https://cs7052.vk.me/c540103/v540103968/1ca47/7Vouh3_Y5Gc.jpg","id":"https://cs7052.vk.me/c540103/v540103968/1ca47/7Vouh3_Y5Gc.jpg"},"https://pp.vk.me/c620731/v620731968/25cc/Be17O3YKlng.jpg":{"imageUrl":"https://pp.vk.me/c620731/v620731968/25cc/Be17O3YKlng.jpg","id":"https://pp.vk.me/c620731/v620731968/25cc/Be17O3YKlng.jpg"}},"$$h33asheeKey2121":"object:14"},{"fio":"Семенова Катерина Васильевна", "adress":"Уральск ул. Мойдадыров","index":"123213","comment":"","goods":{"https://pp.vk.me/c620731/v620731968/25cc/Be17O3YKlng.jpg":{"imageUrl":"https://pp.vk.me/c620731/v620731968/25cc/Be17O3YKlng.jpg","id":"https://pp.vk.me/c620731/v620731968/25cc/Be17O3YKlng.jpg","count":"1"},"https://pp.vk.me/c314829/v314829968/a19c/LXz-zS7_qMA.jpg":{"imageUrl":"https://pp.vk.me/c314829/v314829968/a19c/LXz-zS7_qMA.jpg","id":"https://pp.vk.me/c314829/v314829968/a19c/LXz-zS7_qMA.jpg"}}}]';*/
 
 			$orders = R::find('order');
@@ -74,9 +93,20 @@ return \module\define(['orders'], function($orders){
 			$entityData = $_POST['_entity'];
 
 			$entity = processEntity($entityData);
+
+			$entityDump = $entity->export();
+			foreach ($entityDump as $rowName => $orderRowVal) {
+
+				if ($data = json_decode($orderRowVal, true)){
+					if(is_array($data)){
+						echo "string";
+						$entityDump[$rowName] = $data;
+					}
+				}
+			}
 			
 
-			return json_encode($entity->export());
+			return json_encode($entityDump);
 		}
 	];
 });
