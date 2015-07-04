@@ -102,10 +102,11 @@
 						<th ng-click="orderBy('goods')">Товары</th>
 						<th ng-click="orderBy('total_price')">Цена</th>
 						<th ng-click="orderBy('comment')">Коментарий</th>
+						<th ng-click="orderBy('comment')">Удалить</th>
 		            </tr>
 		        </thead>
 				<tbody>
-	                <tr ng-repeat="order in orders | orderBy:orderCond">
+	                <tr ng-repeat="order in orders | orderBy:orderCond:orderReverse">
 	                  <td>{{ order.id }}</td>
 	                  <td>{{ order.fio }}</td>
 	                  <td>{{ order.adress }}</td>
@@ -123,6 +124,7 @@
 	                  </td>
 	                  <td>{{ order.total_price }}</td>
 	                  <td>{{ order.comment }}</td>
+	                  <td ><span ng-click="delete(order.id)">Удалить</span></td>
 	                </tr>
               </tbody>
 			</table>

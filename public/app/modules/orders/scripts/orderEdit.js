@@ -49,7 +49,7 @@ angular.module('Orders')
 	}
 
 	var Methods = {
-		getList: function(){
+		getList: function(search){
 			var that = this;
 			$http(this.routes.list()).success(function(data){
 				that.list = data;
@@ -63,6 +63,17 @@ angular.module('Orders')
 				$rootScope.$broadcast('orders.update');
 			});
 		},
+		search: function(params){
+			$http(this.routes.search(order)).success(function(newOrder){
+				that.list = data;
+				$rootScope.$broadcast('orders.update');
+			});
+		},
+		delete: function(id){
+			return $http(this.routes.delete(id)).success(function(result){
+				$rootScope.$broadcast('orders.update');
+			});
+		}
 	}
 
 
@@ -84,22 +95,26 @@ angular.module('Orders')
 
 	$rootScope.$on('orders.update', function(){
 		$scope.orders = OrdersService.list; 
+		angular.forEach($scope.orders, function(order){
+			order.id = parseInt(order.id);
+		});
 	});
 
 
 
 	OrdersService.getList();
 
-	var orderRowName, orderAsc = true;
+	var orderRowName;
 	$scope.orderCond = "id";
+	$scope.orderReverse = false;
 
 	$scope.orderBy = function(rowName){
 		
 		if (orderRowName == rowName){
-			orderAsc = (orderAsc)?false:true;
+			$scope.orderReverse = ($scope.orderReverse)?false:true;
 		}
 		orderRowName = rowName;
-		$scope.orderCond = ((orderAsc)?'':'-')+orderRowName;
+		$scope.orderCond = orderRowName;
 		console.log($scope.orderCond);
 	}
 
@@ -127,6 +142,12 @@ angular.module('Orders')
 		})
 		console.log('tota; price',totalPrice);
 		return totalPrice;
+	}
+
+	$scope.delete = function(id){
+		OrdersService.delete(id).success(function(){
+			OrdersService.getList();
+		});
 	}
 
 	$scope.saveOrder = function(order){

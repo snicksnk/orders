@@ -10,6 +10,16 @@ angular.module('Orders')
                 method: 'get'
             }
         },
+        'search': function (params) {
+            return {
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                url: 'api.php?module=orders&controller=index',
+                method: 'post',
+                data: $.param(params),
+                url: '/api.php?module=orders&controller=index&action=add',
+                withParams: true
+            }
+        },
         'add': function (orderData) {
             orderData['_entity_name'] = 'order';
             orderData['goods']['_entity_related'] = {
@@ -24,7 +34,17 @@ angular.module('Orders')
                 url: '/api.php?module=orders&controller=index&action=add',
                 withParams: true
             }
-        }
+        },
+        'delete': function (id) {
+            return {
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                url: 'api.php?module=orders&controller=delete',
+                method: 'post',
+                data: $.param({'id':id}),
+                url: '/api.php?module=orders&controller=index&action=delete',
+                withParams: true
+            }
+        },
     },
     goods: {
         'getByImageUrl': function (imageUrl) {
