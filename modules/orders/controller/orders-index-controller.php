@@ -91,15 +91,12 @@ return \module\define(['orders', 'db'], function($orders, $db){
 		'add' => function(){
 
 			$entityData = $_POST['_entity'];
-
 			$entity = processEntity($entityData);
-
 			$entityDump = $entity->export();
 			foreach ($entityDump as $rowName => $orderRowVal) {
 
 				if ($data = json_decode($orderRowVal, true)){
 					if(is_array($data)){
-						echo "string";
 						$entityDump[$rowName] = $data;
 					}
 				}
