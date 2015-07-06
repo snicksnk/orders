@@ -32,7 +32,6 @@ define(['underscore'], function (_) {
 					this.list = {};
 					var that = this;
 					_.map(list, function(good){
-						console.log(that);
 						good.id = good.imageUrl;
 						that.list[good.imageUrl] = good; 
 					});
@@ -45,7 +44,6 @@ define(['underscore'], function (_) {
 				}
 
 				Goods.prototype.remove = function(id){
-					console.log(id);
 					this.totalPrice += this.list[id].price;
 					delete this.list[id];
 					$rootScope.$broadcast('orders.goods.update');
