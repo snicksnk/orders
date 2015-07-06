@@ -68,6 +68,7 @@ define(['angular'], function (ng) {
 				$scope.editOrder = function(orderId){
 					var order = ng.copy(OrdersService.getWithId(orderId));
 					$scope.order = order;
+					GoodsInOrder.setCurrent(order.goods);
 				};
 
 				$scope.saveOrder = function(order){

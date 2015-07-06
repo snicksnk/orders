@@ -28,6 +28,11 @@ define([], function () {
 					return list;
 				}
 
+				Goods.prototype.setCurrent = function(list){
+					this.list = list;
+					$rootScope.$broadcast('orders.goods.update');
+				}
+
 				Goods.prototype.reset = function(){
 					this.list = {};
 					$rootScope.$broadcast('orders.goods.update');

@@ -45,8 +45,7 @@ define(['angular', 'underscore'], function (ng, _) {
 								var order = that.getWithId(orderId);
 								angular.forEach(order, function(value, row){
 									order[row] = newOrder[row];
-								})
-								that.getList();
+								});
 							} else {
 								that.list.push(newOrder);
 							}
