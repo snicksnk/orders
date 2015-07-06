@@ -61,16 +61,16 @@
 
 		</div>
 
-		<div class="col-md-9">
+		<div class="col-md-9" >
 			<div class="row">		
-				<div style="width: 150px; display: inline-block;" ng-repeat="order in goodsInOrder" >
+				<div  style="width: 150px; display: inline-block;" ng-repeat="good in goodsInOrder" >
 						<span>
-							<img style="max-width: 150px; max-height: 200px;" ng-click="removeGood(order.id)" ng-src="{{ order.imageUrl }}" class="img-rounded">
+							<img style="max-width: 150px; max-height: 200px;" ng-click="removeGood(good.id)" ng-src="{{ good.imageUrl }}" class="img-rounded">
 							<div style="text-align: center; width: 150px; margin-top: 10px; margin-bottom: 10px;">
-								<input style="width: 60px; margin: auto; text-align: center;"  type="text" class="form-control" ng-model="order.count" id="exampleInputPassword1" placeholder="1Шт.">Шт.
+								<input style="width: 60px; margin: auto; text-align: center;"  type="text" class="form-control" ng-model="good.count" id="exampleInputPassword1" placeholder="1Шт.">Шт.
 							</div>
 							<div style="text-align: center; width: 150px; margin-top: 10px; margin-bottom: 10px;">
-								<input style="width: 60px; margin: auto; text-align: center;" type="text" class="form-control" ng-model="order.price" id="exampleInputPassword1" placeholder="Цена.">руб.
+								<input style="width: 60px; margin: auto; text-align: center;" type="text" class="form-control" ng-model="good.price" id="exampleInputPassword1" placeholder="Цена.">руб.
 							</div>
 						</span>
 				</div>

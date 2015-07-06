@@ -86,6 +86,9 @@ return \module\define(['orders', 'db'], function($orders, $db){
 			$good = R::findOne('good',' image_url = ? ', 
                 array( $imgUrl )
                );
+			if(!$good){
+				return json_encode([]);
+			}
 			return json_encode($good->export());
 		},
 		'add' => function(){

@@ -24,7 +24,7 @@ define(['jquery'], function($) {
                     name:'good',
                     type:'one_to_many',
                 };
-
+                console.log(orderData);
                 return {
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     method: 'post',

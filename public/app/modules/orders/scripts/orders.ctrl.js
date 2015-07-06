@@ -74,6 +74,12 @@ define(['angular'], function (ng) {
 				$scope.saveOrder = function(order){
 
 					var orderGoods = GoodsInOrder.getCurrent();
+					
+					if (_.size(orderGoods)<1){
+						alert('Нет товаров в заказе!');
+						return;
+					}
+
 					var orderData = {
 						'fio': $scope.order['fio'],
 						'adress': $scope.order['adress'],

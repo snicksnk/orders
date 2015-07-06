@@ -1,5 +1,5 @@
 "use strict"
-define([], function () {
+define(['underscore'], function (_) {
 	return ["$rootScope", "$http","Routes",
 			function($rootScope, $http ,Routes){
 				var Goods = function(routes){
@@ -29,7 +29,13 @@ define([], function () {
 				}
 
 				Goods.prototype.setCurrent = function(list){
-					this.list = list;
+					this.list = {};
+					var that = this;
+					_.map(list, function(good){
+						console.log(that);
+						good.id = good.imageUrl;
+						that.list[good.imageUrl] = good; 
+					});
 					$rootScope.$broadcast('orders.goods.update');
 				}
 
@@ -39,6 +45,7 @@ define([], function () {
 				}
 
 				Goods.prototype.remove = function(id){
+					console.log(id);
 					this.totalPrice += this.list[id].price;
 					delete this.list[id];
 					$rootScope.$broadcast('orders.goods.update');
