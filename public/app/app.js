@@ -1,5 +1,5 @@
 'use strict';
-requirejs([
+define([
 	'angular',
 	'config/routes',
 	'config/states',

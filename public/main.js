@@ -7,6 +7,7 @@ requirejs.config({
 		'uiBootstrapTpls': '../bower_components/angular-bootstrap/ui-bootstrap-tpls',
 		'jquery': '../bower_components/jquery/dist/jquery',
 		'bootstrap-ui': '../bower_components/bootstrap/dist/js/bootstrap',
+		'underscore': '../bower_components/underscore/underscore'
 	},
     baseUrl: 'app/',
 	shim: {
@@ -24,7 +25,10 @@ requirejs.config({
 		},
 		"bootstrap-ui" : { 
 			deps :['jquery'] 
-		}
+		},
+		"underscore": {
+      		exports: '_'
+    	},
 	},
 	deps: ['./bootstrap']
 });

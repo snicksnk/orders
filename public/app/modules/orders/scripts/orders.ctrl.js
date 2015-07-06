@@ -1,10 +1,13 @@
 "use strict"
-define([], function () {
+define(['angular'], function (ng) {
 	return ["$scope", "$rootScope", "GoodsInOrder", "OrdersService",
 			function($scope, $rootScope, GoodsInOrder, OrdersService){
 
 				$scope.goodsInOrder =  {};
+
 				OrdersService.getList();
+
+				$scope.statuses = OrdersService.statuses;
 
 				$rootScope.$on('orders.goods.update', function(){
 					$scope.goodsInOrder = GoodsInOrder.list;
@@ -62,6 +65,11 @@ define([], function () {
 					});
 				}
 
+				$scope.editOrder = function(orderId){
+					var order = ng.copy(OrdersService.getWithId(orderId));
+					$scope.order = order;
+				};
+
 				$scope.saveOrder = function(order){
 
 					var orderGoods = GoodsInOrder.getCurrent();
@@ -70,9 +78,15 @@ define([], function () {
 						'adress': $scope.order['adress'],
 						'index': $scope.order['index'],
 						'comment': $scope.order['comment'],
+						'track': $scope.order['track'],
+						'status': $scope.order['status'],
 						//'price': $scope.order['price'],
 						'goods': orderGoods,
 						'totalPrice': calculatePrice(orderGoods)
+					}
+
+					if ($scope.order['id']){
+						orderData['id'] = $scope.order['id'];
 					}
 
 					$scope.order = {};
