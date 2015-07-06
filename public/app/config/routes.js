@@ -14,7 +14,7 @@ define(['jquery'], function($) {
                     url: 'api.php?module=orders&controller=index',
                     method: 'post',
                     data: $.param(params),
-                    url: '/api.php?module=orders&controller=index&action=add',
+                    url: 'api.php?module=orders&controller=index&action=add',
                     withParams: true
                 }
             },
@@ -29,7 +29,7 @@ define(['jquery'], function($) {
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     method: 'post',
                     data: $.param({'_entity':orderData}),
-                    url: '/api.php?module=orders&controller=index&action=add',
+                    url: 'api.php?module=orders&controller=index&action=add',
                     withParams: true
                 }
             },
@@ -39,7 +39,7 @@ define(['jquery'], function($) {
                     url: 'api.php?module=orders&controller=delete',
                     method: 'post',
                     data: $.param({'id':id}),
-                    url: '/api.php?module=orders&controller=index&action=delete',
+                    url: 'api.php?module=orders&controller=index&action=delete',
                     withParams: true
                 }
             },
