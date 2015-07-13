@@ -1,0 +1,48 @@
+<div class="form-group" >
+
+	<label for="exampleInputEmail1">Товары</label>
+	<div class="row"> 
+		<form ng-submit=addGood()>
+			<div class="col-md-8">
+				<input required ng-model="orderImage" type="text" class="form-control col-md-8" id="newOrder" placeholder="ulr картинки">
+			</div>
+			<input type="submit" value="Добавить" class="btn col-md-4"/>
+		</form>			
+	</div>
+
+</div>
+<form ng-submit="saveOrder(order)">
+	<div class="form-group">
+		<label for="inputStatus">Статус</label>
+		<select required ng-model="order.status" id="inputStatus" class="form-control">
+			<option ng-selected="status == order.status" ng-repeat="status in statuses">{{ status }}</option>
+		</select>
+
+	</div>
+	<div class="form-group">
+		<label for="inputFIO">ФИО</label>
+		<input type="text" required ng-model="order.fio" class="form-control" id="inputFIO" placeholder="ФИО">
+	</div>
+
+	<div class="form-group">
+		<label for="inputAdress">Адрес</label>
+		<input type="text" required ng-model="order.adress" class="form-control" id="inputAdress" placeholder="Адрес">
+	</div>
+	<div class="form-group">
+		<label for="inputIndex">Индекс</label>
+		<input type="text" required ng-model="order.index" class="form-control" id="inputIndex" placeholder="Индекс">
+	</div>
+	<div class="form-group">
+		<label for="inputTrack">Трекинг - номер</label>
+		<input type="text" required ng-model="order.track" class="form-control" id="inputTrack" placeholder="Трекинг - номер">
+	</div>
+	<div class="form-group">
+		<label for="inputComment">Коментарий</label>
+		<textarea class="form-control" ng-model="order.comment" id="inputComment" placeholder="Текст">
+		</textarea>
+	</div>
+	<div class="form-group">
+		<input type="submit" value="Сохранить" class="btn"/>
+	</div>
+	<input type="hidden" name="id" ng-model="order.id">
+</form>

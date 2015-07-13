@@ -17,6 +17,7 @@ define(['angular'], function (ng) {
 					$scope.orders = OrdersService.list; 
 					angular.forEach($scope.orders, function(order){
 						order.id = parseInt(order.id);
+						order.prepaid = (order.prepaid === 'true')?true:false;
 					});
 				});
 
@@ -71,6 +72,18 @@ define(['angular'], function (ng) {
 					GoodsInOrder.setCurrent(order.goods);
 				};
 
+				$scope.print = function(orderId){
+					if(OrdersService.isPrinted(orderId)){
+						OrdersService.deleteFromPrint(orderId);
+					} else {
+						OrdersService.addToPrint(orderId);
+					}
+				};
+
+				$scope.isPrinted = function(orderId){
+					return OrdersService.isPrinted(orderId);
+				}
+
 				$scope.saveOrder = function(order){
 
 					var orderGoods = GoodsInOrder.getCurrent();
@@ -89,6 +102,7 @@ define(['angular'], function (ng) {
 						'status': $scope.order['status'],
 						//'price': $scope.order['price'],
 						'goods': orderGoods,
+						'prepaid': $scope.order['prepaid'],
 						'totalPrice': calculatePrice(orderGoods)
 					}
 

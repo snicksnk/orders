@@ -8,6 +8,7 @@ define(['angular', 'underscore'], function (ng, _) {
 					this.statuses = [
 						"Получен",
 						"Не подтвержден",
+						"Готов к распечатке",
 						"Распечатан",
 						"Собран и отправлен",
 						"Возврат",
@@ -19,6 +20,7 @@ define(['angular', 'underscore'], function (ng, _) {
 						"Cобрать и отправить",
 						"Дозаказывает"
 					];
+					this.toPrint = {};
 				}
 
 				var Methods = {
@@ -51,6 +53,19 @@ define(['angular', 'underscore'], function (ng, _) {
 							}
 							$rootScope.$broadcast('orders.update');
 						});
+					},
+					addToPrint: function(orderId){
+						this.toPrint[orderId] = this.getWithId(orderId);
+
+					},
+					deleteFromPrint: function(orderId){
+						delete this.toPrint[orderId];
+					},
+					isPrinted: function(orderId){
+						return (typeof this.toPrint[orderId] !== "undefined")?true:false;
+					},
+					getPrinted: function(){
+						return this.toPrint;
 					},
 					search: function(params){
 						$http(this.routes.search(order)).success(function(newOrder){

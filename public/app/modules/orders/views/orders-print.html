@@ -1,0 +1,27 @@
+<div class="col-md-12" ng-repeat="order in orders" class="row">
+	<div class="col-md-6">
+		<p>
+			{{ order.fio }}
+		</p>
+		<p>
+			{{ order.adress }}
+		</p>
+		<p>
+			{{ order.index }}
+		</p>
+	</div>
+	<div class="col-md-6">
+		<p>
+			Наложенный платеж:<br>
+			{{ order.total_price }}<br>
+			Одна тысяча бла бла бла рублей
+		</p>
+		<p>
+			Ценность:<br>
+			{{ order.total_price }}<br>
+			Одна тысяча бла бла бла рублей
+		</p>
+	</div>
+	<hr/>
+	
+</div>
